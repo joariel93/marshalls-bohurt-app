@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useTournament } from '../contexts/TournamentContext';
 import { combatService } from '../services/apiService';
 import PageHeader from '../components/common/PageHeader';
-import LoadingSpinner from '../components/common/LoadingSpinner';
+import MobileDetailSkeleton from '../components/common/skeletons/MobileDetailSkeleton';
 import TimerSetup from '../components/combat/TimerSetup';
 import FighterSelector from '../components/combat/FighterSelector';
 import RoundArena from '../components/combat/RoundArena';
@@ -296,7 +296,7 @@ export default function CombatPage() {
     navigate('/combat');
   }, [navigate]);
 
-  if (!torneo || loading) return <LoadingSpinner />;
+  if (!torneo || loading) return <MobileDetailSkeleton />;
 
   if (!combate) {
     return (

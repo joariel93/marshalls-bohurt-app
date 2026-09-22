@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTournament } from '../contexts/TournamentContext';
 import { tournamentService } from '../services/apiService';
 import PageHeader from '../components/common/PageHeader';
-import LoadingSpinner from '../components/common/LoadingSpinner';
+import MobileListSkeleton from '../components/common/skeletons/MobileListSkeleton';
 import { esColorClaro } from '../utils/colorUtils';
 
 function AddFighterModal({ onClose, onAdd, idTorneo, idEquipo, equiposEnTorneo }) {
@@ -205,7 +205,12 @@ export default function FighterNumberPage() {
     } catch (err) { alert(err.message); } finally { setSaving(false); }
   };
 
-  if (!torneo || loading) return <LoadingSpinner />;
+  if (!torneo || loading) return (
+    <div className="page-container" style={{ padding: '0.25rem', maxWidth: '100%' }}>
+      <PageHeader title="Asignar peleadores" subtitle="Cargando..." onBack={() => navigate('/home')} />
+      <MobileListSkeleton />
+    </div>
+  );
 
   const equipoActual = equipos[selectedTeamIdx];
   const dupEntre = duplicadosEntreEquipos();

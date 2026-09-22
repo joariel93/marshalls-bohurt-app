@@ -168,6 +168,12 @@ function torneoEstaOrganizado(idTorneo) {
 }
 
 const mockAuthService = {
+  async loginWithEmail(email, password) {
+    if (!USE_MOCKS) throw new Error('API no implementada');
+    await delay(500);
+    return usuarios[0];
+  },
+
   async loginWithGoogle(token) {
     if (!USE_MOCKS) throw new Error('API no implementada');
     await delay(500);
@@ -177,6 +183,11 @@ const mockAuthService = {
   async getProfile() {
     await delay(300);
     return usuarios[0];
+  },
+
+  async logout() {
+    await delay(200);
+    return { message: 'Sesión cerrada' };
   },
 };
 
@@ -806,11 +817,23 @@ function mapEliminatoriaCombate(c, index) {
 }
 
 const realAuthService = {
-  async loginWithGoogle() {
-    const { data } = await apiClient.post('/v1/marshall/auth/login', {
-      email: DEMO_EMAIL,
-      proveedor: 'google',
-    });
+  async loginWithEmail(email, password) {
+    const { data } = await apiClient.post('/v1/marshall/auth/login', { email, password });
+    return data;
+  },
+
+  async loginWithGoogle(idToken) {
+    const { data } = await apiClient.post('/v1/marshall/auth/google', { idToken });
+    return data;
+  },
+
+  async getProfile() {
+    const { data } = await apiClient.get('/v1/auth/me');
+    return data;
+  },
+
+  async logout() {
+    const { data } = await apiClient.post('/v1/auth/logout');
     return data;
   },
 };

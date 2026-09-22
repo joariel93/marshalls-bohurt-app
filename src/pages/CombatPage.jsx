@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTournament } from '../contexts/TournamentContext';
 import PageHeader from '../components/common/PageHeader';
-import LoadingSpinner from '../components/common/LoadingSpinner';
+import MobileListSkeleton from '../components/common/skeletons/MobileListSkeleton';
 
 function MiniTeamLine({ equipo }) {
   if (!equipo) return <span className="text-xs text-color-secondary italic">TBD</span>;
@@ -39,7 +39,12 @@ export default function CombatPage() {
     navigate(`/combat/${combate.id}`);
   };
 
-  if (!torneo || loading) return <LoadingSpinner />;
+  if (!torneo || loading) return (
+    <div className="page-container" style={{ padding: '0.25rem' }}>
+      <PageHeader title="Combates" subtitle="Cargando..." onBack={() => navigate('/home')} />
+      <MobileListSkeleton />
+    </div>
+  );
 
   return (
     <div className="page-container" style={{ padding: '0.25rem' }}>

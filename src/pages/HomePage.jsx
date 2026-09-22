@@ -1,16 +1,30 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTournament } from '../contexts/TournamentContext';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 export default function HomePage() {
-  const { user, logout } = useAuth();
+  const { user, logout, initializing } = useAuth();
   const { limpiarTorneo } = useTournament();
   const navigate = useNavigate();
+
+  if (initializing) {
+    return (
+      <div className="page-container justify-content-center align-items-center">
+        <LoadingSpinner text="Iniciando..." />
+      </div>
+    );
+  }
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login', { replace: true });
+  };
 
   return (
     <div className="page-container">
       <div className="flex justify-content-end mb-1">
-        <button className="p-button p-button-text p-button-sm text-color-secondary" style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }} onClick={() => { logout(); navigate('/login', { replace: true }); }}>
+        <button className="p-button p-button-text p-button-sm text-color-secondary" style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }} onClick={handleLogout}>
           <i className="pi pi-sign-out mr-1" />Salir
         </button>
       </div>

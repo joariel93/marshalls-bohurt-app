@@ -5,6 +5,7 @@ import { tournamentService } from '../services/apiService';
 import { generarLiga, generarEliminatoriaDirecta, generarGruposYEliminatoria } from '../utils/combatGenerator';
 import { getEquiposAsignadosPorGrupo } from '../utils/groupUtils';
 import PageHeader from '../components/common/PageHeader';
+import MobileListSkeleton from '../components/common/skeletons/MobileListSkeleton';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import GroupEditor from '../components/tournament/GroupEditor';
 import BracketEditor from '../components/tournament/BracketEditor';
@@ -62,7 +63,12 @@ export default function TournamentSetupPage() {
     if (tipoOrganizacion !== 'eliminatoria') setTipoOrganizacion(null);
   };
 
-  if (!torneo) return <LoadingSpinner />;
+  if (!torneo) return (
+    <div className="page-container" style={{ padding: '0.25rem' }}>
+      <PageHeader title="Organizar torneo" subtitle="Cargando..." onBack={() => navigate('/fighters')} />
+      <MobileListSkeleton />
+    </div>
+  );
 
   const porClub = {};
   equipos.forEach((e) => {
@@ -130,7 +136,7 @@ export default function TournamentSetupPage() {
         <GroupEditor equipos={equipos} onSave={handleGuardarGrupos} onBack={() => setTipoOrganizacion(null)} />
       ) : combatesGenerados ? (
         <CombatPreview combates={combatesGenerados} equipos={equipos} onConfirm={handleConfirmarCombates} />
-      ) : <LoadingSpinner />}
+      ) : <MobileListSkeleton />}
 
       {creando && (
         <div className="fixed top-0 left-0 w-full h-full flex align-items-center justify-content-center z-5" style={{ background: 'rgba(0,0,0,0.5)' }}>

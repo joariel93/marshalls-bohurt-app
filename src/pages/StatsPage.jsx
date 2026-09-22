@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTournament } from '../contexts/TournamentContext';
 import { tournamentService } from '../services/apiService';
 import PageHeader from '../components/common/PageHeader';
-import LoadingSpinner from '../components/common/LoadingSpinner';
+import MobileListSkeleton from '../components/common/skeletons/MobileListSkeleton';
 import StatsTable from '../components/tournament/StatsTable';
 
 export default function StatsPage() {
@@ -30,7 +30,16 @@ export default function StatsPage() {
     fetchStats();
   }, [torneo, navigate]);
 
-  if (!torneo || loading) return <LoadingSpinner />;
+  if (!torneo || loading) return (
+    <div className="page-container">
+      <PageHeader
+        title="Estadísticas"
+        subtitle="Cargando..."
+        onBack={() => navigate('/combat')}
+      />
+      <MobileListSkeleton />
+    </div>
+  );
 
   return (
     <div className="page-container">
