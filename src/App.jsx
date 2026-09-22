@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import { TournamentProvider } from './contexts/TournamentContext'
+import ProtectedRoute from './components/auth/ProtectedRoute'
 import LoginPage from './pages/LoginPage'
 import HomePage from './pages/HomePage'
 import OTPPage from './pages/OTPPage'
@@ -16,13 +17,13 @@ function App() {
       <TournamentProvider>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/otp" element={<OTPPage />} />
-          <Route path="/fighters" element={<FighterNumberPage />} />
-          <Route path="/tournament-setup" element={<TournamentSetupPage />} />
-          <Route path="/combat" element={<CombatPage />} />
-          <Route path="/combat/:combatId" element={<CombatDetailPage />} />
-          <Route path="/stats" element={<StatsPage />} />
+          <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+          <Route path="/otp" element={<ProtectedRoute><OTPPage /></ProtectedRoute>} />
+          <Route path="/fighters" element={<ProtectedRoute><FighterNumberPage /></ProtectedRoute>} />
+          <Route path="/tournament-setup" element={<ProtectedRoute><TournamentSetupPage /></ProtectedRoute>} />
+          <Route path="/combat" element={<ProtectedRoute><CombatPage /></ProtectedRoute>} />
+          <Route path="/combat/:combatId" element={<ProtectedRoute><CombatDetailPage /></ProtectedRoute>} />
+          <Route path="/stats" element={<ProtectedRoute><StatsPage /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </TournamentProvider>

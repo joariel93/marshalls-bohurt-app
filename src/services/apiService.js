@@ -174,12 +174,6 @@ const mockAuthService = {
     return usuarios[0];
   },
 
-  async loginWithGoogle(token) {
-    if (!USE_MOCKS) throw new Error('API no implementada');
-    await delay(500);
-    return usuarios[0];
-  },
-
   async getProfile() {
     await delay(300);
     return usuarios[0];
@@ -819,11 +813,6 @@ function mapEliminatoriaCombate(c, index) {
 const realAuthService = {
   async loginWithEmail(email, password) {
     const { data } = await apiClient.post('/v1/marshall/auth/login', { email, password });
-    return data;
-  },
-
-  async loginWithGoogle(idToken) {
-    const { data } = await apiClient.post('/v1/marshall/auth/google', { idToken });
     return data;
   },
 

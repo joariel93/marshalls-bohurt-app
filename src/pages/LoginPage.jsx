@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { loginSchema } from '../utils/validation';
 
 export default function LoginPage() {
-  const { loginWithEmail, loginWithGoogle, loading } = useAuth();
+  const { loginWithEmail, loading } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,25 +13,18 @@ export default function LoginPage() {
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     setError('');
+
+    const validation = loginSchema.safeParse({ email, password });
+    if (!validation.success) {
+      setError(validation.error.errors[0].message);
+      return;
+    }
+
     try {
       await loginWithEmail(email, password);
       navigate('/home', { replace: true });
     } catch (err) {
       setError(err.message || 'Error al iniciar sesión');
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    setError('');
-    try {
-      // En un flujo real con Google Identity Services, acá obtendríamos el id_token.
-      // Como placeholder, usamos un prompt para desarrollo/testing.
-      const idToken = window.prompt('Pegá el idToken de Google (modo dev):');
-      if (!idToken) return;
-      await loginWithGoogle(idToken);
-      navigate('/home', { replace: true });
-    } catch (err) {
-      setError(err.message || 'Error al iniciar sesión con Google');
     }
   };
 
@@ -91,21 +85,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="w-full flex align-items-center gap-2">
-          <div className="flex-1" style={{ height: '1px', background: 'var(--surface-border)' }} />
-          <span className="text-color-secondary text-sm">o</span>
-          <div className="flex-1" style={{ height: '1px', background: 'var(--surface-border)' }} />
-        </div>
-
-        <button
-          onClick={handleGoogleLogin}
-          className="p-button p-button-outlined w-full flex align-items-center justify-content-center gap-2"
-          style={{ height: '3rem' }}
-          disabled={loading}
-        >
-          <i className="pi pi-google" style={{ fontSize: '1.2rem' }} />
-          Ingresar con Google
-        </button>
       </div>
     </div>
   );

@@ -10,8 +10,8 @@ const apiClient = axios.create({
 let isRefreshing = false;
 let refreshSubscribers = [];
 
-const onRefreshed = () => {
-  refreshSubscribers.forEach((callback) => callback());
+const onRefreshed = (refreshError) => {
+  refreshSubscribers.forEach((callback) => callback(refreshError));
   refreshSubscribers = [];
 };
 
@@ -26,9 +26,10 @@ apiClient.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry && originalRequest.url !== '/v1/auth/refresh') {
       if (isRefreshing) {
-        return new Promise((resolve) => {
-          addRefreshSubscriber(() => {
-            resolve(apiClient(originalRequest));
+        return new Promise((resolve, reject) => {
+          addRefreshSubscriber((refreshError) => {
+            if (refreshError) reject(refreshError);
+            else resolve(apiClient(originalRequest));
           });
         });
       }
@@ -38,10 +39,10 @@ apiClient.interceptors.response.use(
 
       try {
         await apiClient.post('/v1/auth/refresh');
-        onRefreshed();
+        onRefreshed(null);
         return apiClient(originalRequest);
       } catch (refreshError) {
-        window.location.href = '/login';
+        onRefreshed(refreshError);
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
