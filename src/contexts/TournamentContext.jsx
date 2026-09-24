@@ -10,13 +10,15 @@ export function TournamentProvider({ children }) {
   const [combateActual, setCombateActual] = useState(null);
   const [grupos, setGrupos] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isDemo, setIsDemo] = useState(false);
 
   const validarOTP = useCallback(async (codigo) => {
     setLoading(true);
     try {
       const result = await tournamentService.validarOTP(codigo);
       if (result.accesoValido) {
-        setTorneo(result.torneo);
+        setTorneo({ ...result.torneo, isDemo: !!result.isDemo });
+        setIsDemo(!!result.isDemo);
       }
       return result;
     } finally {
@@ -28,7 +30,8 @@ export function TournamentProvider({ children }) {
     setLoading(true);
     try {
       const torneo = await tournamentService.crearTorneoVacio(nombre);
-      setTorneo(torneo);
+      setTorneo({ ...torneo, isDemo: true });
+      setIsDemo(true);
       setEquipos([]);
       setCombates([]);
       setCombateActual(null);
@@ -73,11 +76,12 @@ export function TournamentProvider({ children }) {
     setCombates([]);
     setCombateActual(null);
     setGrupos([]);
+    setIsDemo(false);
   }, []);
 
   return (
     <TournamentContext.Provider value={{
-      torneo, equipos, combates, combateActual, grupos, loading,
+      torneo, equipos, combates, combateActual, grupos, loading, isDemo,
       validarOTP,
       crearTorneo,
       cargarEquiposConPeleadores,

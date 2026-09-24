@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import { TournamentProvider } from './contexts/TournamentContext'
 import ProtectedRoute from './components/auth/ProtectedRoute'
+import DemoBanner from './components/common/DemoBanner'
 import LoginPage from './pages/LoginPage'
 import HomePage from './pages/HomePage'
 import OTPPage from './pages/OTPPage'
@@ -15,6 +16,7 @@ function App() {
   return (
     <AuthProvider>
       <TournamentProvider>
+        <DemoBanner />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
