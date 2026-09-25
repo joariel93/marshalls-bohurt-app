@@ -176,49 +176,29 @@ const combates = [
   {
     id_torneo: "torneo-001", id_combate: "combate-001", orden: 1,
     id_equipo_a: "equipo-001", id_equipo_b: "equipo-002",
-    id_equipo_ganador: "equipo-001",
-    cantidad_round_ganados_ganador: 2, cantidad_round_ganados_perdedor: 1,
+    id_equipo_ganador: null,
+    cantidad_round_ganados_ganador: 0, cantidad_round_ganados_perdedor: 0,
     link: null,
   },
   {
     id_torneo: "torneo-001", id_combate: "combate-002", orden: 2,
     id_equipo_a: "equipo-001", id_equipo_b: "equipo-003",
-    id_equipo_ganador: "equipo-001",
-    cantidad_round_ganados_ganador: 2, cantidad_round_ganados_perdedor: 0,
+    id_equipo_ganador: null,
+    cantidad_round_ganados_ganador: 0, cantidad_round_ganados_perdedor: 0,
     link: null,
   },
   {
     id_torneo: "torneo-001", id_combate: "combate-003", orden: 3,
     id_equipo_a: "equipo-002", id_equipo_b: "equipo-003",
-    id_equipo_ganador: "equipo-002",
-    cantidad_round_ganados_ganador: 2, cantidad_round_ganados_perdedor: 1,
+    id_equipo_ganador: null,
+    cantidad_round_ganados_ganador: 0, cantidad_round_ganados_perdedor: 0,
     link: null,
   },
 ];
 
-const roundCombate = [
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 1, id_equipo_ganador: "equipo-001", puntos_ganador: 5, puntos_perdedor: 3 },
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 2, id_equipo_ganador: "equipo-002", puntos_ganador: 6, puntos_perdedor: 4 },
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 3, id_equipo_ganador: "equipo-001", puntos_ganador: 7, puntos_perdedor: 2 },
-  { id_torneo: "torneo-001", id_combate: "combate-002", orden: 2, round: 1, id_equipo_ganador: "equipo-001", puntos_ganador: 8, puntos_perdedor: 2 },
-  { id_torneo: "torneo-001", id_combate: "combate-002", orden: 2, round: 2, id_equipo_ganador: "equipo-001", puntos_ganador: 5, puntos_perdedor: 3 },
-  { id_torneo: "torneo-001", id_combate: "combate-003", orden: 3, round: 1, id_equipo_ganador: "equipo-002", puntos_ganador: 4, puntos_perdedor: 4 },
-  { id_torneo: "torneo-001", id_combate: "combate-003", orden: 3, round: 2, id_equipo_ganador: "equipo-003", puntos_ganador: 6, puntos_perdedor: 3 },
-  { id_torneo: "torneo-001", id_combate: "combate-003", orden: 3, round: 3, id_equipo_ganador: "equipo-002", puntos_ganador: 5, puntos_perdedor: 2 },
-];
+const roundCombate = [];
 
-const roundPeleador = [
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 1, id_usuario: "user-f1", en_pie: 1, amonestado: 0, expulsado: 0 },
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 1, id_usuario: "user-f2", en_pie: 1, amonestado: 1, expulsado: 0 },
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 1, id_usuario: "user-f3", en_pie: 0, amonestado: 0, expulsado: 0 },
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 1, id_usuario: "user-f4", en_pie: 1, amonestado: 0, expulsado: 0 },
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 1, id_usuario: "user-f5", en_pie: 1, amonestado: 0, expulsado: 0 },
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 1, id_usuario: "user-f6", en_pie: 0, amonestado: 0, expulsado: 1 },
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 1, id_usuario: "user-f7", en_pie: 1, amonestado: 0, expulsado: 0 },
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 1, id_usuario: "user-f8", en_pie: 1, amonestado: 0, expulsado: 0 },
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 1, id_usuario: "user-f9", en_pie: 1, amonestado: 1, expulsado: 0 },
-  { id_torneo: "torneo-001", id_combate: "combate-001", orden: 1, round: 1, id_usuario: "user-f10", en_pie: 1, amonestado: 0, expulsado: 0 },
-];
+const roundPeleador = [];
 
 const equiposPorGrupo = [];
 
