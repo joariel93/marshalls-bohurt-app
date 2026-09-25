@@ -14,41 +14,17 @@ import {
 export const DEMO_TORNEO_ID = 'demo-torneo';
 export const DEMO_CODE = '!!!!!!';
 
-// Estado mutable en memoria. Se pierde al refrescar la página.
-let demoState = {
-  torneo: {
-    id: DEMO_TORNEO_ID,
-    nombre: 'Torneo Demo',
-    localizacion: 'Modo demostración',
-    fechaTorneo: '2026-12-01',
-    modalidad: 'Buhurt',
-    categoria: '5 vs 5',
-    genero: 'Masculino',
-    idTipoTorneo: 1,
-    organizado: true,
-  },
-  usuarios: JSON.parse(JSON.stringify(usuarios)),
-  equipos: JSON.parse(JSON.stringify(equipos)),
-  torneoEquipo: JSON.parse(JSON.stringify(torneoEquipo)).map(te => ({
-    ...te,
-    posicion: te.posicion ?? null,
-    cantidad_combates: te.cantidad_combates ?? 0,
-    cantidad_victorias: te.cantidad_victorias ?? 0,
-    cantidad_derrotas: te.cantidad_derrotas ?? 0,
-    cantidad_rounds_ganados: te.cantidad_rounds_ganados ?? 0,
-    cantidad_rounds_perdidos: te.cantidad_rounds_perdidos ?? 0,
-    cantidad_hombres_en_pie: te.cantidad_hombres_en_pie ?? 0,
-    es_cabeza_serie: te.es_cabeza_serie ?? 0,
-  })),
-  torneoEquipoPeleador: JSON.parse(JSON.stringify(torneoEquipoPeleador)),
-  combates: JSON.parse(JSON.stringify(combates)),
-  roundCombate: JSON.parse(JSON.stringify(roundCombate)),
-  roundPeleador: [],
-  equiposPorGrupo: JSON.parse(JSON.stringify(equiposPorGrupo)),
-};
+// Helper: remapea todos los id_torneo del dataset original al id demo, para que las
+// queries por `id_torneo === DEMO_TORNEO_ID` devuelvan datos.
+function remapTorneo(rows) {
+  return JSON.parse(JSON.stringify(rows)).map((r) => ({
+    ...r,
+    id_torneo: DEMO_TORNEO_ID,
+  }));
+}
 
-export function resetDemoState() {
-  demoState = {
+function buildDemoState() {
+  return {
     torneo: {
       id: DEMO_TORNEO_ID,
       nombre: 'Torneo Demo',
@@ -62,7 +38,7 @@ export function resetDemoState() {
     },
     usuarios: JSON.parse(JSON.stringify(usuarios)),
     equipos: JSON.parse(JSON.stringify(equipos)),
-    torneoEquipo: JSON.parse(JSON.stringify(torneoEquipo)).map(te => ({
+    torneoEquipo: remapTorneo(torneoEquipo).map(te => ({
       ...te,
       posicion: te.posicion ?? null,
       cantidad_combates: te.cantidad_combates ?? 0,
@@ -73,12 +49,19 @@ export function resetDemoState() {
       cantidad_hombres_en_pie: te.cantidad_hombres_en_pie ?? 0,
       es_cabeza_serie: te.es_cabeza_serie ?? 0,
     })),
-    torneoEquipoPeleador: JSON.parse(JSON.stringify(torneoEquipoPeleador)),
-    combates: JSON.parse(JSON.stringify(combates)),
-    roundCombate: JSON.parse(JSON.stringify(roundCombate)),
+    torneoEquipoPeleador: remapTorneo(torneoEquipoPeleador),
+    combates: remapTorneo(combates),
+    roundCombate: remapTorneo(roundCombate),
     roundPeleador: [],
-    equiposPorGrupo: JSON.parse(JSON.stringify(equiposPorGrupo)),
+    equiposPorGrupo: remapTorneo(equiposPorGrupo),
   };
+}
+
+// Estado mutable en memoria. Se pierde al refrescar la página.
+let demoState = buildDemoState();
+
+export function resetDemoState() {
+  demoState = buildDemoState();
 }
 
 function findUsuario(id) {

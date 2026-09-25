@@ -68,7 +68,7 @@ const usuarios = [
   { id_usuario: "user-f27", username: "luciano.paredes@test.com", nombre: "Luciano", apellido: "Paredes", id_tipo_usuario: 4, dni: "32789012" },
   { id_usuario: "user-f28", username: "franco.cabrera@test.com", nombre: "Franco", apellido: "Cabrera", id_tipo_usuario: 4, dni: "32890123" },
   { id_usuario: "user-f29", username: "ignacio.molina@test.com", nombre: "Ignacio", apellido: "Molina", id_tipo_usuario: 4, dni: "32901234" },
-  { id_usuario: "user-f30", nombre: "Ezequiel", apellido: "Silva", dni: "33012345" },
+  { id_usuario: "user-f30", username: "ezequiel.silva@test.com", nombre: "Ezequiel", apellido: "Silva", id_tipo_usuario: 4, dni: "33012345" },
 ];
 
 const equipos = [
@@ -116,7 +116,6 @@ const torneos = [
     id_genero: 1,
     id_tipo_torneo: 1,
     password: "ABC123",
-    passwordJugadores: "PLAY456",
   },
   {
     id_torneo: "torneo-002",
@@ -129,7 +128,6 @@ const torneos = [
     id_genero: 1,
     id_tipo_torneo: 3,
     password: "DEF456",
-    passwordJugadores: "PLAY789",
   },
 ];
 
